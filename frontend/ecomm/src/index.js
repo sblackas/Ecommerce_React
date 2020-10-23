@@ -1,16 +1,41 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import mainReducer from './Store/reducers';
 import * as serviceWorker from './serviceWorker';
-// import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/css/bootstrap.min.css'
 import './index.css';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
+import Home from './Components/Home';
+import SignUp from './Components/SignUp';
+import SignIn from './Components/SignIn';
+import ProductPage from './Components/ProductPage';
+import AddProduct from './Components/AddProduct';
+import ProductListPage from './Components/ProductListPage';
+import Dashboard from './Components/Dashboard'
 
+const store = createStore(mainReducer);
+
+const myRouter = (
+  <Provider store={store}>
+      <Router>
+          <Switch>
+              <Route exact path="/" component={Home} />
+              <Route path="/signup" component={SignUp} />
+              <Route path="/signin" component={SignIn} />
+              <Route path="/dashboard" component={Dashboard} />
+              <Route path="/addproduct" component={AddProduct} />
+              <Route path="/productlist" component={ProductListPage} />
+              <Route path="/product/:id" component={ProductPage} />
+          </Switch>
+      </Router>
+  </Provider>
+);
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  myRouter,
   document.getElementById('root')
 );
 

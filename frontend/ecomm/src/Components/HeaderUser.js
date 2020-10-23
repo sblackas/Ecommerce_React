@@ -5,28 +5,32 @@ import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import FormControl from 'react-bootstrap/FormControl'
 import Nav from 'react-bootstrap/Nav'
-
+import { connect } from 'react-redux'
+import { logoutUser } from '../Store/actions/user';
+// import jwt from 'jsonwebtoken';
 
 class HeaderUser extends React.Component {
+
+  state = {
+    email: "",
+    password: "",
+
+};
+
+componentDidMount(){
+let loggedOutUser = {
+  token: null,
+  email: null,
+  id: null
+};
+this.props.logoutUser(loggedOutUser)
+this.props.history.push('/');
+}
 
     render() {
 
         return(
 
-            
-            // <div>
-            //   <nav>
-            //     <ul>
-            //       <li>
-            //         <NavLink to="/addproduct">ajout produits</NavLink>
-            //       </li>
-            //       <li>
-            //         <NavLink to="/productlist">Vos produits</NavLink>
-            //       </li>
-            //     </ul>
-            //   </nav>
-            //   </div>
-              
             <Navbar bg="light" variant="light">
             <Navbar.Brand href="/">Tech</Navbar.Brand>
             <Nav className="mr-auto">
@@ -36,17 +40,23 @@ class HeaderUser extends React.Component {
             <Form inline>
               <FormControl type="text" placeholder="Search" className="mr-sm-2" />
               <Button variant="outline-primary">Search</Button>
+              <Navbar.Brand href="/">Sign Out</Navbar.Brand>
             </Form>
           </Navbar>
              
 
         )
-
-       
        
     }
 }
 
+const mapStateToProps = (state /*, ownProps*/) => {
+  return {}
+}
 
-export default HeaderUser;
+const mapDispatchToProps = { logoutUser }
 
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(HeaderUser) ;

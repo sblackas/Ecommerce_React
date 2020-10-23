@@ -1,15 +1,19 @@
 import React from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button'
-import {Redirect} from 'react-router-dom'
+// import {Redirect} from 'react-router-dom'
 import axios from 'axios'
 import Header from './Header'
+import jwt from 'jsonwebtoken';
+import { connect } from 'react-redux'
+import { loginUser } from '../Store/actions/user';
+// import { logoutUser } from '../Store/actions/user';
 
 class SignIn extends React.Component{
     state = {
         email: "",
         password: "",
-        redirection: false
+        // redirection: false
     
     };
     
@@ -32,17 +36,32 @@ class SignIn extends React.Component{
     
         axios.post('http://localhost:8000/users/sign-in', user)
         .then(res => {
-            this.setState({ redirection: true})
-            console.log(res);
-            console.log(res.data);
-            localStorage.setItem("token", res.data.token) //Une fois que ca donne un token il faut le stocker, je le recupere dans addProduct
+            // this.setState({ redirection: true})
+            // console.log(res);                   // -----> ces lignes étaient là avant qu'on fasse le store
+            // console.log(res.data);
+            if(res.status === 200) {
+              console.log(res);
+              let decoded = jwt.decode(res.data.token);
+              let loggedUser = {
+                token: res.data.token,
+                email: decoded.email,
+                id: decoded.id
+              };
+              
+              this.props.loginUser(loggedUser)
+              this.props.history.push('/dashboard');
+            } 
+            // localStorage.setItem("token", res.data.token) //Une fois que ca donne un token il faut le stocker, je le recupere dans addProduct
+        })
+        .catch(err => {
+          console.log(err.response.data);
         })
     }
 render() {
-    const { redirection } = this.state;
-    if (redirection){
-        return <Redirect to='/dashboard/'/>
-    }
+    // const { redirection } = this.state;
+    // if (redirection){
+    //     return <Redirect to='/dashboard/'/>
+    // }
 
   return (
       <div>
@@ -73,4 +92,15 @@ render() {
 }
 }
 
-export default SignIn;
+const mapStateToProps = (state /*, ownProps*/) => {
+  return {
+    // counter: state.counter
+  }
+}
+
+const mapDispatchToProps = { loginUser }
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SignIn) ;

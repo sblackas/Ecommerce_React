@@ -49,17 +49,20 @@ router.post('/users/sign-up', function(req, res) {
 
       db.query(`SELECT * FROM users WHERE email = '${req.body.email}'`, function (err, result) { // *=tout
         if (err) throw err;
-        bcrypt.compare(req.body.password, result[0].password, function(err,theuser){
+        if (result.length) {
+          bcrypt.compare(req.body.password, result[0].password, function(err,theuser){
             console.log(theuser);
             if(theuser) {
               let token = jwt.sign({ id: result[0].id, name: result[0].name }, config.secret, { expiresIn: 86400 });
               console.log(token);
               res.send({ auth: true, token: token, user: result[0] }); 
-            } else {
-              res.status(400).send("sorry we don't know this user") //rajout de .status(400)
-            }
+            } 
         })
 
+        } else {
+          res.status(400).send("sorry we don't know this user") //rajout de .status(400)
+        }
+        
       });
 
   });
