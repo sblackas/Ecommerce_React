@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import mainReducer from './Store/reducers';
+import thunk from 'redux-thunk'
 import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './index.css';
@@ -16,7 +17,12 @@ import AddProduct from './Components/AddProduct';
 import ProductListPage from './Components/ProductListPage';
 import Dashboard from './Components/Dashboard'
 
-const store = createStore(mainReducer);
+import { composeWithDevTools } from 'redux-devtools-extension';
+
+const middleware = [thunk]
+
+const store = createStore(mainReducer, composeWithDevTools(
+  applyMiddleware(...middleware)));
 
 const myRouter = (
   <Provider store={store}>

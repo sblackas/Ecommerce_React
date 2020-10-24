@@ -56,7 +56,11 @@ router.post('/users/sign-up', function(req, res) {
               let token = jwt.sign({ id: result[0].id, name: result[0].name }, config.secret, { expiresIn: 86400 });
               console.log(token);
               res.send({ auth: true, token: token, user: result[0] }); 
-            } 
+            } else {
+              res.status(400).send("wrong password") //rajout de .status(400)
+
+            }
+       
         })
 
         } else {

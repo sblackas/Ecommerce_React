@@ -1,6 +1,5 @@
 import React from 'react';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button'
+import {Button, Alert, Form} from 'react-bootstrap'
 // import {Redirect} from 'react-router-dom'
 import axios from 'axios'
 import Header from './Header'
@@ -13,6 +12,7 @@ class SignIn extends React.Component{
     state = {
         email: "",
         password: "",
+        message: ""
         // redirection: false
     
     };
@@ -55,6 +55,8 @@ class SignIn extends React.Component{
         })
         .catch(err => {
           console.log(err.response.data);
+          this.setState({ message: err.response.data })
+          console.log(this.state.message);
         })
     }
 render() {
@@ -70,7 +72,8 @@ render() {
 
 <Form onSubmit={this.handleSubmit}>
             <Form.Group controlId="formBasicEmail">
-              <Form.Label>Email address</Form.Label>
+{ this.state.message ?  <Alert variant="danger" > {this.state.message} </Alert> : null }
+             <Form.Label>Email address</Form.Label>
               <Form.Control type="email" placeholder="Enter email" onChange={this.inputEmail} />
               <Form.Text className="text-muted">
                 We'll never share your email with anyone else.

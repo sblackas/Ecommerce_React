@@ -8,8 +8,5 @@ export const loginUser = (user) => ({
 })
 
 export const logoutUser = () => ({
-    type: "SIGNOUT_USER",
-    token: null,
-    email: null,
-    id:  null
+    type: "SIGNOUT_USER"
 })

@@ -16,9 +16,9 @@ const initialStates = {
      case "SIGNOUT_USER":
        return {
          ...state,
-         token: action.token,
-         email: action.email,
-         id: action.id
+         token: null,
+         email: null,
+         id: null
        };
      default:
        return {

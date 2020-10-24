@@ -17,15 +17,15 @@ class HeaderUser extends React.Component {
 
 };
 
-componentDidMount(){
-let loggedOutUser = {
-  token: null,
-  email: null,
-  id: null
-};
-this.props.logoutUser(loggedOutUser)
-this.props.history.push('/');
+
+
+logOutSubmit = () => {
+  
+  this.props.logoutUser()
+  this.props.history.push('/');
 }
+
+
 
     render() {
 
@@ -40,7 +40,7 @@ this.props.history.push('/');
             <Form inline>
               <FormControl type="text" placeholder="Search" className="mr-sm-2" />
               <Button variant="outline-primary">Search</Button>
-              <Navbar.Brand href="/">Sign Out</Navbar.Brand>
+              <Navbar.Brand href="/"  onClick={ this.logOutSubmit } >Sign Out</Navbar.Brand>
             </Form>
           </Navbar>
              
