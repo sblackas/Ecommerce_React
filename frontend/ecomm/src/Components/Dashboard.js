@@ -1,6 +1,9 @@
 import React from 'react';
 import HeaderUser from './HeaderUser';
 import { connect } from 'react-redux'
+// import bglogin from '../Images/bglogin.jpg'
+import './Dashboard.css';
+
 
 
 class Dashboard extends React.Component{
@@ -8,8 +11,9 @@ render() {
   return (
     <div className="">
       <HeaderUser/>
-<p>Welcome to you precious user</p>
-<p>{this.props.token}</p>
+      {/* <img src={ bglogin } className="bglogin" alt="" /> */}
+
+{/* <p>{this.props.token}</p> */}
 <p>{this.props.user}</p>
 
     </div>

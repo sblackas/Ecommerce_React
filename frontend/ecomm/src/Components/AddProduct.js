@@ -1,11 +1,14 @@
 import React from 'react';
 import HeaderUser from './HeaderUser'
 import axios from 'axios'
-import Form from 'react-bootstrap/Form'
-import Button from 'react-bootstrap/Button'
-import Col from 'react-bootstrap/Col'
+// import Form from 'react-bootstrap/Form'
+// import Button from 'react-bootstrap/Button'
+// import Col from 'react-bootstrap/Col'
+import { connect } from "react-redux";
+import { newProduct } from '../Store/actions/products';
 // import Swal from 'sweetalert2'
 // import Row from 'react-bootstrap/Row'
+import './AddProduct.css'
 
 class AddProduct extends React.Component{
     state = {
@@ -15,6 +18,7 @@ class AddProduct extends React.Component{
         category:"",
         description: "",
         picture: "",
+        msgSuccess: ""
     
     };
 
@@ -52,11 +56,15 @@ class AddProduct extends React.Component{
 
         };
         
-        axios.post('http://localhost:8000/products', product, {headers: {authorization: localStorage.getItem("token")}} )
+        axios.post('http://localhost:8000/products', product, {headers: {authorization: this.props.token}} )
         //recuperation du token stocké dans le localStorage comme ca y'a plus "no token"
+        // {headers: {authorization: localStorage.getItem("token")}}
         .then(res => {
             console.log(res);
             console.log(res.data);
+
+            this.setState({ msgSuccess: "Bien ajouté"})
+            this.props.newProduct(res.data[0])
         })
 
   }
@@ -65,15 +73,49 @@ class AddProduct extends React.Component{
 
 render() {
   return (
-    <div className="">
+    <div className="AddProduct">
+
+      
 
         <HeaderUser/>
 
-        <header>
-          ADD PRODUCT
-        </header>
+        <div className="containerForm">
+  <h1>&bull; Add Your Product &bull;</h1>
+  <div className="underline">
+  </div>
+  <p>{this.state.msgSuccess}</p>
+  <form onSubmit={this.handleSubmit} id="contact_form">
+    <div className="name">
+      <label for="Name"></label>
+      <input type="name" id="name_input" placeholder="NAME" onChange={this.inputNameProduct}/>
+    </div>
+    <div className="brand">
+      <label for="email"></label>
+      <input type="text"   id="brand_input" placeholder="BRAND" onChange={this.inputMarque}/>
+    </div>
+    <div className="category">
+      <label for="name"></label>
+      <input type="text"  id="cate_input" placeholder="CATEGORY" onChange={this.inputCategory}/>
+    </div>
+    <div className="prix">
+      <label for="Price"></label>
+      <input type="text"   id="price_input"  placeholder="PRICE" onChange={this.inputPrice}/>
+    </div>
+    <div className="picture">
+      <label for="Picture"></label>
+      <input type="text"  id="picture_input" placeholder="PICTURE" onChange={this.inputPicture}/>
+    </div>
+    <div className="message">
+      <label for="Description"></label>
+      <textarea  placeholder="Put a short description of the product" id="message_input" cols="30" rows="5" onChange={this.inputDesc}></textarea>
+    </div>
+    <div className="submit">
+      <button type="submit" value="Submit" id="form_button" ><span>Submit</span><div id="circle"></div></button>
+    </div>
+  </form>
+</div>
       
-      <Form onSubmit={this.handleSubmit}>
+      {/* <Form onSubmit={this.handleSubmit}>
   <Form.Row>
     <Form.Group as={Col} controlId="formGridEmail">
       <Form.Label>Nom du produit</Form.Label>
@@ -105,7 +147,6 @@ render() {
   <Form.Group>
     <Form.Label>Image du Produit</Form.Label>
     <Form.Control onChange={this.inputPicture} >
-    {/* <Form.File id="exampleFormControlFile1" label="Picture" /> */}
     </Form.Control>
   </Form.Group>
   </Form.Row>
@@ -114,11 +155,26 @@ render() {
   <Button variant="primary" type="submit">
     Submit
   </Button>
-</Form>
+</Form> */}
 
-    </div>
-  );
-}
+
+
+
+      </div>
+    );
+  }
 }
 
-export default AddProduct;
+const mapStateToProps = (state /*, ownProps*/) => {
+  return {
+    product : state.productsReducer.payload,
+    token: state.userReducer.token,
+  }
+}
+
+const mapDispatchToProps = { newProduct }
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AddProduct) ;

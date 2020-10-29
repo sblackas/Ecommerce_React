@@ -1,11 +1,15 @@
 import React from 'react';
-import {Button, Alert, Form} from 'react-bootstrap'
+// import {Button, Alert, Form} from 'react-bootstrap'
 // import {Redirect} from 'react-router-dom'
+import {Alert} from 'react-bootstrap'
 import axios from 'axios'
 import Header from './Header'
 import jwt from 'jsonwebtoken';
 import { connect } from 'react-redux'
 import { loginUser } from '../Store/actions/user';
+import './SignIn.css';
+import salon from '../Images/salon.jpeg'
+import decosalon from '../Videos/decosalon.MP4'
 // import { logoutUser } from '../Store/actions/user';
 
 class SignIn extends React.Component{
@@ -69,8 +73,11 @@ render() {
       <div>
 
 <Header/>
-
-<Form onSubmit={this.handleSubmit}>
+<img src={ salon } alt="" />
+<video autoPlay loop muted id="bgvid">
+      <source src={ decosalon } type="video/mp4"/>
+    </video>
+{/* <Form onSubmit={this.handleSubmit}>
             <Form.Group controlId="formBasicEmail">
 { this.state.message ?  <Alert variant="danger" > {this.state.message} </Alert> : null }
              <Form.Label>Email address</Form.Label>
@@ -89,7 +96,27 @@ render() {
             <Button variant="primary" type="submit">
               Submit
             </Button>
-          </Form>
+          </Form> */}
+<div className="login-box" >
+<h2>Welcome Back !</h2>
+<p>To keep enjoy our content please login with your personal info</p>
+<br></br>
+  <form onSubmit={this.handleSubmit}>
+  { this.state.message ?  <Alert variant="danger" > {this.state.message} </Alert> : null }
+    <div className="user-box">
+      <input type="email" onChange={this.inputEmail}/>
+      <label>Email</label>
+    </div>
+    <div className="user-box">
+      <input type="password"  onChange={this.inputPassword} />
+      <label>Password</label>
+    </div>
+    <link href="https://fonts.googleapis.com/css2?family=Cookie&display=swap" rel="stylesheet"></link>
+    {/* <div id="btn" type="submit"><span className="noselect">Submit</span><div id="circle"></div></div> */}
+    <button id="btn" type="submit"><span className="noselect">Submit</span><div id="circle"></div></button>
+
+  </form>
+</div>
           </div>
   );
 }

@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/esm/Button';
 import HeaderUser from './HeaderUser'
 
 
+
 // import { Link } from 'react-router-dom';
 
 
@@ -22,6 +23,8 @@ class ProductPage extends React.Component{
         axios.get(`http://localhost:8000/products/${id}`)
         .then(res => {
         this.setState({details: res.data[0]});
+
+      
            }); 
         
         }
@@ -29,10 +32,10 @@ class ProductPage extends React.Component{
         render() {
           const productdetails = this.state.details ? (
               <Card style={{ width: '18rem' }}>
-                  <Card.Img variant="top" src={this.state.details.picture} />
+                  <Card.Img variant="top" style={{backgroundImage: `url(${this.state.details.picture})`}} />
                   <Card.Body>
                       <Card.Title>{this.state.details.name}</Card.Title>
-                      <Card.Text>{this.state.details.price}</Card.Text> 
+                      <Card.Text>{this.state.details.price}€</Card.Text> 
                       <Card.Text>{this.state.details.description}</Card.Text>
                       <Button variant="success">Add to Basket</Button>
                   </Card.Body>
@@ -53,4 +56,6 @@ class ProductPage extends React.Component{
       }
   }
 
-export default ProductPage;
+ 
+  
+  export default (ProductPage) ;

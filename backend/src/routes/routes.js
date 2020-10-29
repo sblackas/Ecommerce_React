@@ -104,8 +104,12 @@ router.post('/users/sign-up', function(req, res) {
       db.query(newProduct, function (err, theproduct) { // envoyer mon newProduct dans ma database
       console.log(theproduct);
           if (err) res.send(err);
+          //faire un select et res.send le result de ce select
+          db.query(`SELECT * FROM products WHERE id = '${theproduct.insertId}'`, function (err, results) {
+            res.send(results)
+
+          })
           console.log("one new product registered");
-            res.send(theproduct)
       })
     } catch(err) {
       res.send(err)

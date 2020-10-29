@@ -1,8 +1,11 @@
 import React from 'react';
-import Form from 'react-bootstrap/Form'
-import Button from 'react-bootstrap/Button'
+// import Form from 'react-bootstrap/Form'
+// import Button from 'react-bootstrap/Button'
 import axios from 'axios' // importer tout ce qu'on utiliser dans le component
 import Header from './Header'
+import salon from '../Images/salon.jpeg'
+import decosalon from '../Videos/decosalon.MP4'
+import '../Components/SignUp.css'
 
 class SignUp extends React.Component{
     //State correpond à la data
@@ -47,9 +50,15 @@ render() {
    <div>
 
        <Header/>
-<Form onSubmit={this.handleSubmit}> {/* onSubmit au clique ca enclenche ma fonction handleSubmit*/}
 
-<Form.Group controlId="formBasicName">
+       <img src={ salon } alt="" cover/>
+<video autoPlay loop muted id="bgvid">
+      <source src={ decosalon } type="video/mp4"/>
+    </video>
+
+{/* <Form onSubmit={this.handleSubmit}> 
+
+<Form.Group controlId="formBasicName" >
               <Form.Label>Name</Form.Label>
               <Form.Control type="name" placeholder="Enter Name" onChange={this.inputName} />
               <Form.Text className="text-muted">
@@ -74,7 +83,31 @@ render() {
             <Button variant="primary" type="submit">
               Submit
             </Button>
-          </Form>
+  </Form> */}
+
+<div className="login-box" >
+<h2>Hello mon cornichon !</h2>
+<p>Enter your personal details and start journey with us</p>
+<br></br>
+  <form className="form" onSubmit={this.handleSubmit}>
+  <div className="user-box">
+      <input type="name"  onChange={this.inputName} />
+      <label>Name</label>
+    </div>
+    <div className="user-box">
+      <input type="email" onChange={this.inputEmail}/>
+      <label>Email</label>
+    </div>
+    <div className="user-box">
+      <input type="password"  onChange={this.inputPassword} />
+      <label>Password</label>
+    </div>
+    <link href="https://fonts.googleapis.com/css2?family=Cookie&display=swap" rel="stylesheet"></link>
+    {/* <div id="btn" type="submit"><span className="noselect">Submit</span><div id="circle"></div></div> */}
+    <button id="btn" type="submit"><span className="noselect">Submit</span><div id="circle"></div></button>
+
+  </form>
+</div>
 
           </div>
         )

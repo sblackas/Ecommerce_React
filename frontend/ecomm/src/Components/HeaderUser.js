@@ -1,13 +1,12 @@
 import React from 'react';
-// import {NavLink} from "react-router-dom";
+import {Link} from "react-router-dom";
 import Navbar from 'react-bootstrap/Navbar'
-import Button from 'react-bootstrap/Button'
-import Form from 'react-bootstrap/Form'
-import FormControl from 'react-bootstrap/FormControl'
+// import Form from 'react-bootstrap/Form'
 import Nav from 'react-bootstrap/Nav'
+import logo from '../Images/logo.jpg'
+import './HeaderUser.css';
 import { connect } from 'react-redux'
 import { logoutUser } from '../Store/actions/user';
-// import jwt from 'jsonwebtoken';
 
 class HeaderUser extends React.Component {
 
@@ -31,17 +30,18 @@ logOutSubmit = () => {
 
         return(
 
-            <Navbar bg="light" variant="light">
-            <Navbar.Brand href="/">Tech</Navbar.Brand>
+            <Navbar bg="white" variant="light">
+            <Navbar.Brand href="/"><img src={logo}  className="logoheader" alt=""/> </Navbar.Brand>
             <Nav className="mr-auto">
-              <Nav.Link href="/addproduct">Ajout Produit</Nav.Link>
-              <Nav.Link href="/productlist">Vos Produits</Nav.Link>
+              <Nav.Link as={Link} to="/addproduct">Ajout Produit</Nav.Link>
+              <Nav.Link as={Link} to="/productlist">Vos Produits</Nav.Link>
+              <Nav.Link as={Link} to="/dashboard">Dashboard</Nav.Link>
             </Nav>
-            <Form inline>
-              <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-              <Button variant="outline-primary">Search</Button>
+            {/* <Form inline> */}
+              {/* <FormControl type="text" placeholder="Search" className="mr-sm-2" /> */}
+              {/* <Button variant="outline-primary">Search</Button> */}
               <Navbar.Brand href="/"  onClick={ this.logOutSubmit } >Sign Out</Navbar.Brand>
-            </Form>
+            {/* </Form> */}
           </Navbar>
              
 

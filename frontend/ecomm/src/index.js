@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
+// import { persistStore, persistReducer } from 'redux-persist'
+// import storage from 'redux-persist/lib/storage'
 import mainReducer from './Store/reducers';
 import thunk from 'redux-thunk'
 import * as serviceWorker from './serviceWorker';
@@ -23,6 +25,19 @@ const middleware = [thunk]
 
 const store = createStore(mainReducer, composeWithDevTools(
   applyMiddleware(...middleware)));
+
+  // const persistConfig = {
+  //   key: 'root',
+  //   storage,
+  // }
+  // const persistedReducer = persistReducer(persistConfig)
+ 
+  // export default () => {
+  //   let store = createStore(persistedReducer)
+  //   let persistor = persistStore(store)
+  //   return { store, persistor }
+  // }
+
 
 const myRouter = (
   <Provider store={store}>
